@@ -1,10 +1,28 @@
+"use client";
+
 import { UserButton } from "@clerk/nextjs";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { Input } from "./ui/input";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
+  const router = useRouter();
+
+  const handleMakeNewStory = async () => {
+    try {
+      const response = await axios.post("/api/new-story");
+      router.push(`/story/${response.data.id}`);
+      // console.log("response:", response);
+
+      console.log("response:", response);
+    } catch (error) {
+      console.log("Error creating new story", error);
+    }
+  };
+
   return (
     <div className="px-8 py-2 border-b-[1px]">
       <div className="flex items-center justify-between">
@@ -20,7 +38,10 @@ const Navbar = () => {
         </div>
 
         <div className="flex items-center space-x-7">
-          <span className="flex items-center space-x-2 opacity-70 hover:opacity-100 duration-100 ease-in cursor-pointer">
+          <span
+            onClick={handleMakeNewStory}
+            className="flex items-center space-x-2 opacity-70 hover:opacity-100 duration-100 ease-in cursor-pointer"
+          >
             <svg
               width="24"
               height="24"
