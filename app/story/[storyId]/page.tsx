@@ -1,4 +1,3 @@
-import Navbar from "@/components/Navbar";
 import NewStory from "@/components/NewStory";
 
 const page = ({ params }: { params: { storyId: string } }) => {

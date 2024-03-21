@@ -1,6 +1,8 @@
 "use client";
 
 import { useRef } from "react";
+import { Button } from "./ui/button";
+import { Plus } from "lucide-react";
 
 const NewStory = () => {
   const handleContentEditableREF = useRef<HTMLDivElement | null>(null);
@@ -16,8 +18,14 @@ const NewStory = () => {
         contentEditable
         suppressContentEditableWarning
         className="outline-none focus:outline-none editable max-w-[800px]"
-      >
-        vfvdsv
+      ></div>
+      <div className="z-10">
+        <Button
+          id="tooltip"
+          className="border-[1px] border-neutral-500 p-1 rounded-full inline-block"
+        >
+          <Plus />
+        </Button>
       </div>
     </main>
   );
