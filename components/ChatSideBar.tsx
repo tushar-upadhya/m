@@ -40,7 +40,7 @@ const ChatSideBar = ({ user, show, onClose }: IChatSidebarProps) => {
     <div
       className={`relative w-full flex-col md:max-w-[360px] ${show ? "flex" : "hidden"}`}
     >
-      {userMenuOpen && (
+      {/* {userMenuOpen && (
         <UsersMenu
           loggedInUser={user}
           handleOnClose={() => setUserMenuOpen(false)}
@@ -49,7 +49,7 @@ const ChatSideBar = ({ user, show, onClose }: IChatSidebarProps) => {
             // handleOnClose();
           }}
         />
-      )}
+      )} */}
 
       <MenuBar handleOnUserMenuClick={() => setUserMenuOpen(true)} />
       <ChannelList
