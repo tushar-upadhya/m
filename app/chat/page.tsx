@@ -11,6 +11,7 @@ import { Menu, X } from "lucide-react";
 import useWindowSize from "@/hooks/useWindowSize";
 import { mdBreakPoint } from "@/utils/tailwind";
 import { useTheme } from "../ThemeProvider";
+import { registerServiceWorker } from "@/utils/serviceWorker";
 
 const ChatPage = () => {
   const [sideBarOpen, setSideBarOpen] = useState(false);
@@ -28,6 +29,17 @@ const ChatPage = () => {
 
   const handleSideBarOnClose = useCallback(() => {
     setSideBarOpen(false);
+  }, []);
+
+  useEffect(() => {
+    async function setUpServiceWorker() {
+      try {
+        await registerServiceWorker();
+      } catch (error) {
+        console.log("error:", error);
+      }
+    }
+    setUpServiceWorker();
   }, []);
 
   if (!chatClient || !user) {

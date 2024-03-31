@@ -3,6 +3,7 @@ import { Users } from "lucide-react";
 import ThemeToggler from "./ThemeToggler";
 import { useTheme } from "@/app/ThemeProvider";
 import { dark } from "@clerk/themes";
+import PushSubscriptionToggleButton from "./PushSubscriptionToggleButton";
 
 interface IMenuBarProps {
   handleOnUserMenuClick: () => void;
@@ -17,6 +18,8 @@ const MenuBar = ({ handleOnUserMenuClick }: IMenuBarProps) => {
         appearance={{ baseTheme: theme === "dark" ? dark : undefined }}
       />
       <div className="flex gap-6">
+        <PushSubscriptionToggleButton />
+
         <span title="Show users">
           <Users onClick={handleOnUserMenuClick} className="cursor-pointer" />
         </span>

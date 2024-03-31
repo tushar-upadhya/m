@@ -3,10 +3,6 @@
 import { isServer } from "@/utils/utils";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 
-/*	
-  Note: We create our own theme provider for learning purposes. In a real app, consider using next-themes for better functionality.	
-*/
-
 type Theme = "light" | "dark";
 
 interface ThemeContext {
