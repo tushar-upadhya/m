@@ -6,51 +6,57 @@ import {
   ChannelPreviewUIComponentProps,
 } from "stream-chat-react";
 import MenuBar from "./MenuBar";
+import UsersMenu from "./UsersMenu";
 
 interface IChatSidebarProps {
   user: UserResource;
   show: boolean;
   onClose: () => void;
+  customActiveChannel?: string;
 }
 
-const ChatSideBar = ({ user, show, onClose }: IChatSidebarProps) => {
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
+export default function ChatSidebar({
+  user,
+  show,
+  onClose,
+  customActiveChannel,
+}: IChatSidebarProps) {
+  const [usersMenuOpen, setUsersMenuOpen] = useState(false);
 
   useEffect(() => {
-    if (!show) setUserMenuOpen(false);
+    if (!show) setUsersMenuOpen(false);
   }, [show]);
 
-  const channelPreviewCustom = useCallback(
-    (props: ChannelPreviewUIComponentProps) => {
-      return (
-        <ChannelPreviewMessenger
-          {...props}
-          onSelect={() => {
-            props.setActiveChannel?.(props.channel, props.watchers);
-            onClose();
-          }}
-        />
-      );
-    },
+  const ChannelPreviewCustom = useCallback(
+    (props: ChannelPreviewUIComponentProps) => (
+      <ChannelPreviewMessenger
+        {...props}
+        onSelect={() => {
+          props.setActiveChannel?.(props.channel, props.watchers);
+          onClose();
+        }}
+      />
+    ),
     [onClose],
   );
 
   return (
     <div
-      className={`relative w-full flex-col md:max-w-[360px] ${show ? "flex" : "hidden"}`}
+      className={`relative w-full flex-col md:max-w-[360px] ${
+        show ? "flex" : "hidden"
+      }`}
     >
-      {/* {userMenuOpen && (
+      {usersMenuOpen && (
         <UsersMenu
           loggedInUser={user}
-          handleOnClose={() => setUserMenuOpen(false)}
+          handleOnClose={() => setUsersMenuOpen(false)}
           handleOnChannelSelected={() => {
-            setUserMenuOpen(false);
-            // handleOnClose();
+            setUsersMenuOpen(false);
+            onClose();
           }}
         />
-      )} */}
-
-      <MenuBar handleOnUserMenuClick={() => setUserMenuOpen(true)} />
+      )}
+      <MenuBar handleOnUserMenuClick={() => setUsersMenuOpen(true)} />
       <ChannelList
         filters={{
           type: "messaging",
@@ -58,6 +64,7 @@ const ChatSideBar = ({ user, show, onClose }: IChatSidebarProps) => {
         }}
         sort={{ last_message_at: -1 }}
         options={{ state: true, presence: true, limit: 10 }}
+        customActiveChannel={customActiveChannel}
         showChannelSearch
         additionalChannelSearchProps={{
           searchForChannels: true,
@@ -67,10 +74,8 @@ const ChatSideBar = ({ user, show, onClose }: IChatSidebarProps) => {
             },
           },
         }}
-        Preview={channelPreviewCustom}
+        Preview={ChannelPreviewCustom}
       />
     </div>
   );
-};
-
-export default ChatSideBar;
+}

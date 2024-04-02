@@ -3,21 +3,22 @@ import { getReadyServiceWorker } from "@/utils/serviceWorker";
 
 export async function getCurrentPushSubscription(): Promise<PushSubscription | null> {
   const sw = await getReadyServiceWorker();
-
   return sw.pushManager.getSubscription();
 }
 
-export async function registerPushNotification() {
+export async function registerPushNotifications() {
   if (!("PushManager" in window)) {
-    throw Error("Push notification are not supported by this brower");
+    throw Error("Push notifications are not supported by this browser");
   }
 
   const existingSubscription = await getCurrentPushSubscription();
+
   if (existingSubscription) {
     throw Error("Existing push subscription found");
   }
 
   const sw = await getReadyServiceWorker();
+
   const subscription = await sw.pushManager.subscribe({
     userVisibleOnly: true,
     applicationServerKey: env.NEXT_PUBLIC_WEB_PUSH_PUBLIC_KEY,
@@ -26,11 +27,13 @@ export async function registerPushNotification() {
   await sendPushSubscriptionToServer(subscription);
 }
 
-export async function unRegisterPushNotification() {
+export async function unRegisterPushNotifications() {
   const existingSubscription = await getCurrentPushSubscription();
+
   if (!existingSubscription) {
-    throw Error("Mo Existing push subscription is not available found");
+    throw Error("No existing push subscription found");
   }
+
   await deletePushSubscriptionFromServer(existingSubscription);
 
   await existingSubscription.unsubscribe();

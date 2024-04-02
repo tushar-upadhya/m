@@ -1,5 +1,4 @@
-import { clerkClient } from "@clerk/nextjs";
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { auth, clerkClient, currentUser } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 import { PushSubscription } from "web-push";
 

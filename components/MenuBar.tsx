@@ -18,7 +18,7 @@ const MenuBar = ({ handleOnUserMenuClick }: IMenuBarProps) => {
         appearance={{ baseTheme: theme === "dark" ? dark : undefined }}
       />
       <div className="flex gap-6">
-        <PushSubscriptionToggleButton />
+        {/* <PushSubscriptionToggleButton /> */}
 
         <span title="Show users">
           <Users onClick={handleOnUserMenuClick} className="cursor-pointer" />
